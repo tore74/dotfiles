@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/tore/.config'
+let g:netrw_dirhist_2='/home/tore/.config/tmux/plugins/catppuccin/tmux'
+let g:netrw_dirhist_1='/home/tore/.config/tmux/plugins/catppuccin'
+let g:netrw_dirhist_0='/home/tore/.config/tmux/plugins'
+let g:netrw_dirhist_9='/home/tore/.config/tmux'
+let g:netrw_dirhist_8='/home/tore/.config/tmux/plugins'
+let g:netrw_dirhist_7='/home/tore/.config/tmux/plugins/catppuccin'
+let g:netrw_dirhist_6='/home/tore/.config/tmux/plugins'
+let g:netrw_dirhist_5='/home/tore/.config/tmux'
+let g:netrw_dirhist_4='/home/tore/.config'

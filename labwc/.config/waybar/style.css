@@ -1,0 +1,44 @@
+@define-color foreground #eeeeee;
+@define-color foreground-inactive #aaaaaa;
+@define-color background #000000;
+
+* {
+    /*font-family: JetBrainsMono Nerd Font;*/
+    font-family: DejaVuSansM Nerd Font;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+#waybar {
+    color: @foreground;
+    background-color: @background;
+    
+}
+
+#taskbar button.active {
+    color: @foreground;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+}
+
+#taskbar button {
+    color: @foreground-inactive;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+}
+
+#memory,
+#temperature {
+    padding-left: 0.5em
+}
+
+#tray,
+#wireplumber,
+#backlight,
+#bluetooth,
+#network,
+#battery,
+#clock {
+    padding-right: 0.5em 
+}

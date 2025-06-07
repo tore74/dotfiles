@@ -1,0 +1,29 @@
+# Etter ren debian install:
+Husk å legger til contrib og non-free i /etc/apt/sources.list*
+Kjør autolabwc for alt som trengs for minimal labwc
+
+opprette .config .local/bin .local/share/themes osv
+
+#Dejavu nerdfont
+https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DejaVuSansMono.zip
+
+#nvim nyere versjon for gamle libs
+https://github.com/neovim/neovim-releases
+
+#bashmarks
+https://github.com/huyng/bashmarks
+
+# Installer rust via rustup, husk build-essential el.l
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+#Installer yazi og ouch(filutpakker) via cargo
+cargo install --locked yazi-fm yazi-cli
+
+# kan evt bare laste ned musl release fra ouch, har alt som trengs 
+# https://github.com/ouch-org/ouch 
+cargo install ouch 
+
+# everforest theme for yazi
+ya pkg add Chromium-3-Oxide/everforest-medium
+# ouch plugin
+ya pkg add ndtoan96/ouch

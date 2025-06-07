@@ -1,0 +1,49 @@
+# Labwc autostart file
+
+# Log file for errors and output
+LOGFILE="/tmp/autostart.log"
+
+# Set wallpaper
+swaybg -i /home/tore/Pictures/walls/mob01.jpg >/dev/null 2>&1 &
+
+# scale
+#wlr-randr --output eDP-1 --scale 1.2
+
+# Configure output directives such as mode, position, scale and transform.
+# Use wlr-randr to get your output names
+# Example ~/.config/kanshi/config below:
+#   profile {
+#     output HDMI-A-1 position 1366,0
+#     output eDP-1 position 0,0
+#   }
+#kanshi >/dev/null 2>&1 &
+
+# Launch a panel such as yambar or waybar.
+waybar >>/dev/null 2>&1 &
+
+# --- GNOME Color Scheme ---
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark >>"$LOGFILE" 2>&1 &
+# --- Cursor Theme ---
+#CURSOR_THEME="DMZ-White" # Exemple: "Breeze_Snow"
+#gsettings set org.gnome.desktop.interface cursor-theme $CURSOR_THEME >>"$LOGFILE" 2>&1 &
+#seat seat0 xcursor_theme $CURSOR_THEME >>"$LOGFILE" 2>&1 &
+
+
+# --- Additional Services ---
+fnott >>"$LOGFILE" 2>&1 & # Notifications
+wlsunset -l 61.04 -L 10.42 >>"$LOGFILE" 2>&1 & # Night light
+wl-paste --watch cliphist store -max-items 100 >>"$LOGFILE" 2>&1 & # Clipboard manager
+
+
+# Lock screen after 5 minutes; turn off display after another 5 minutes.
+#
+# Note that in the context of idle system power management, it is *NOT* a good
+# idea to turn off displays by 'disabling outputs' for example by
+# `wlr-randr --output <whatever> --off` because this re-arranges views
+# (since a837fef). Instead use a wlr-output-power-management client such as
+# https://git.sr.ht/~leon_plickat/wlopm
+swayidle -w \
+	timeout 300 'swaylock -f -c 000000' \
+	timeout 600 'wlopm --off \*' \
+	resume 'wlopm --on \*' \
+	before-sleep 'swaylock -f -c 000000' >/dev/null 2>&1 &

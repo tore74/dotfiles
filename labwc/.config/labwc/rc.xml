@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<!--
+  This is a very simple config file with many options missing. For a complete
+  set of options with comments, see docs/rc.xml.all
+-->
+
+<labwc_config>
+
+  <theme>
+    <name>Base16</name>
+    <cornerRadius>3</cornerRadius>
+    <font name="DejaVu Sans" size="10" />
+  </theme>
+
+  <keyboard>
+    <default />
+    <!-- Use a different terminal emulator -->
+     <keybind key="W-Return">
+      <action name="Execute" command="foot" />
+    </keybind>
+    <keybind key="W-r">
+      <action name="Execute" command="fuzzel" />
+    </keybind>
+    <keybind key="W-w">
+      <action name="Execute" command="firefox" />
+    </keybind>
+    <keybind key="A-F3">
+      <action name="Execute" command="fuzzel" />
+    </keybind>
+    <!--
+      Remove a previously defined keybind
+      A shorter alternative is <keybind key="W-F4" />
+    -->
+      <keybind key="W-Up">
+      <action name="ToggleMaximize" />
+    </keybind>
+    <keybind key="W-Down">
+      <action name="Execute" command="~/.local/bin/show_desk.sh" />
+    </keybind>
+     <keybind key="W-F4">
+      <action name="None" />
+    </keybind>
+	     
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute" command="wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" />
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute" command="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" />
+    </keybind>
+     <keybind key="XF86AudioMute">
+      <action name="Execute" command="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" />
+    </keybind>
+    <keybind key="W-period"><action name="Execute" command="bemoji" /></keybind>
+    <keybind key="W-comma"><action name="Execute" command="clip-manager" /></keybind>
+    <keybind key="W-S-Return"><action name="Execute" command="fuzz-launcher" /></keybind>
+    <keybind key="XF86_MonBrightnessUp"><action name="Execute" command="brightnessctl set +1%" /></keybind>
+    <keybind key="XF86_MonBrightnessDown"><action name="Execute" command="brightnessctl --min-value=1 set 1%-" /></keybind>
+    <keybind key="W-x"><action name="ToggleAlwaysOnTop" /></keybind>
+    <keybind key="W-S-x"><action name="ToggleDecorations" /></keybind>
+    <keybind key="W-C-Backspace"><action name="Exit" /></keybind>
+
+    <keybind key="W-z">
+      <action name="ToggleKeyBinds" />
+    </keybind>
+  </keyboard>
+
+  <mouse>
+    <default />
+    <!-- Show a custom menu on desktop right click -->
+    <context name="Root">
+      <mousebind button="Left" action="Press">
+        <action name="None" />
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="None" />
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+    </context>
+  </mouse>
+
+  <windowRules>
+  <!-- For Flatpak -->
+    <windowRule identifier="com.moonlight_stream.Moonlight" title="* - Moonlight">
+      <action name="ToggleKeybinds"/>
+	</windowRule>
+  <!-- For AppImage -->   
+    <windowRule identifier="AppRun" title="* - Moonlight">
+      <action name="ToggleKeybinds"/>
+    </windowRule>
+  </windowRules>
+
+</labwc_config>

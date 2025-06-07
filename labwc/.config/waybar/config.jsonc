@@ -1,0 +1,122 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 26,
+    "spacing": 0,
+
+    "modules-left": [ 
+      "custom/launcher",
+      "memory",
+      "temperature"
+    ],
+
+    "modules-center": ["wlr/taskbar"],
+    
+    "modules-right": [
+      "tray",
+//      "custom/wlsunset",
+      "wireplumber",
+      "backlight",
+      "bluetooth",
+      "network",
+      "battery",
+      "clock"
+    ],
+
+  "custom/launcher": {
+    "format": "  ",
+    "on-click": "fuzz-launcher",
+    "tooltip": false
+  },
+
+
+	"wlr/taskbar": {
+		"format": "{icon}{title:10.16}",
+		"icon-size": 22,
+		//"icon-theme": "Numix-Circle",
+		"tooltip-format": "{title}",
+		"on-click": "activate",
+		"on-click-middle": "close",
+		"ignore-list": [
+			"Alacritty"
+		],
+		"app_ids-mapping": {
+			"firefoxdeveloperedition": "firefox-developer-edition"
+		},
+    "rewrite": {
+  		"Firefox Web Browser": "Firefox",
+	  	"firefox": "Firefox",
+	  	"foot": "Foot"
+		}
+},
+
+  "custom/wlsunset": {
+    "format": "",
+    "on-click": "dash ~/.config/waybar/scripts/flavours-toggle",
+    "on-click-right": "dash ~/.config/waybar/scripts/sun-toggle",
+    "tooltip": true,
+    "tooltip-format": "Night light",
+  },
+
+
+  
+    "clock": {
+        "format": "{:L%H:%M}",
+        "timezone": "",
+        "tooltip": true,
+        "tooltip-format": "{:%a %d %b}",
+//       "format": "{:%d.%m.%y %H:%M}"
+    },
+
+    "wireplumber": {
+        "format": "\udb81\udd7e {volume}%",
+        "max-volume": 100,
+        "scroll-step": 5
+    },
+
+    "battery": {
+        "bat": "BAT0",
+        "interval": 60,
+        "format": " {icon} {capacity}%",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
+    },
+
+    "backlight": {
+        "format": "\udb80\udcdf {percent}%"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": "\uf4bc {used:0.1f}G"
+    },
+
+    "temperature": {
+        "format": " {temperatureC}°C"
+    },
+
+    "network": {
+        "format": "",
+        "format-ethernet": "\udb83\udc9d",
+        "format-wifi": "{icon}",
+        "format-disconnected": "\udb83\udc9c",
+        "format-icons": ["\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "foot -e net-menu",
+    },
+
+    "bluetooth": {
+        "format": "\udb80\udcaf",
+        "format-disabled": "\udb80\udcb2",
+        "format-connected": "\udb80\udcb1",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 4
+    }
+}

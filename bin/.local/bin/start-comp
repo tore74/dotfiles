@@ -1,0 +1,87 @@
+#!/bin/sh
+# Generalized startup script for Wayland compositors
+# License: GNU General Public License, version 3 or later
+
+# Parse options
+START_PIPEWIRE=false
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        -p) START_PIPEWIRE=true ;;
+        *) COMPOSITOR="$1" ;;
+    esac
+    shift
+done
+
+if [ -z "$COMPOSITOR" ]; then
+    echo "Usage: $(basename "$0") [-p] <compositor_name>"
+    echo "   -p: Start PipeWire and related services"
+    exit 1
+fi
+
+# Define the log file
+mkdir -p "$HOME/.cache"
+LOGFILE="$HOME/.cache/wsession-errors"
+exec > "$LOGFILE" 2>&1
+
+# Log the script start time
+echo "$COMPOSITOR session started: $(date)"
+
+# Common environment variable settings
+## QT Related
+export QT_QPA_PLATFORM=wayland-egl
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+export ELM_DISPLAY=wl
+export SDL_VIDEODRIVER=wayland
+
+## GTK Related
+export GTK_USE_PORTAL=1
+
+## Firefox
+export MOZ_ENABLE_WAYLAND=1
+
+## Cursor
+export XCURSOR_THEME=Breeze
+export XCURSOR_SIZE=24
+#export WLR_NO_HARDWARE_CURSORS=1
+
+## XDG
+export XDG_SESSION_TYPE=wayland
+export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+export XDG_SESSION_DESKTOP="$COMPOSITOR"
+export XDG_CURRENT_DESKTOP="$COMPOSITOR"
+
+# Comment out XDG_DESKTOP_PORTAL unless specifically needed
+#export XDG_DESKTOP_PORTAL=wlr
+
+# Remove "Couldn't register with accessibility bus: Did not receive a reply." warnings
+export NO_AT_BRIDGE=1
+
+# Set keyboard layout (optional)
+export XKB_DEFAULT_LAYOUT=no
+#export XKB_DEFAULT_OPTIONS=grp:rctrl_rshift_toggle
+
+# D-Bus session setup
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    eval $(/usr/bin/dbus-launch --exit-with-session --sh-syntax)
+fi
+dbus-update-activation-environment --verbose --all
+
+# Unset variables from old sessions
+unset SWAYSOCK I3SOCK WAYLAND_DISPLAY DISPLAY
+
+# Cleanup older sessions
+rm -f "$HOME"/.cache/*.wob
+
+# Start PipeWire and Services if -p option is given
+if [ "$START_PIPEWIRE" = true ]; then
+    echo "Starting PipeWire services..."
+    pgrep -x pipewire > /dev/null || pipewire &
+    sleep 1
+    pgrep -x wireplumber > /dev/null || wireplumber &
+    pgrep -x pipewire-pulse > /dev/null || pipewire-pulse &
+fi
+
+# Start the compositor
+echo "Starting compositor: $COMPOSITOR"
+dbus-run-session "$COMPOSITOR"
